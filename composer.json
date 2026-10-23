@@ -1,0 +1,19 @@
+{
+  "name": "phpup/php-upgrade-kit",
+  "description": "把老 PHP 站点（7.x / 8.0 / 8.1）自动升级到 PHP 8.5 的工具：扫描、预演、修复、生成升级包",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.2"
+  },
+  "require-dev": {
+    "rector/rector": "2.7.0",
+    "phpstan/phpstan": "2.3.1",
+    "phpcompatibility/php-compatibility": "10.0.0-alpha2",
+    "squizlabs/php_codesniffer": "3.13.6",
+    "phpcsstandards/phpcsutils": "1.2.3"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {"allow-plugins": {"dealerdirect/phpcodesniffer-composer-installer": true}}
+}

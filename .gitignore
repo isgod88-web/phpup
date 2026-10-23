@@ -1,0 +1,13 @@
+# 依赖（composer install 生成）
+/vendor/
+# Windows 一键脚本自动下载的便携版 PHP
+/php/
+# 运行结果：报告、差异、备份、升级包（里面是你自己站点的代码，切勿提交）
+/reports/
+.rector-cache/
+*.zip
+*.tgz
+*.tar.gz
+# 系统文件
+.DS_Store
+Thumbs.db
