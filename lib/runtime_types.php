@@ -626,6 +626,18 @@ foreach ($files as $rel => $editable) {
             if ($fn === null || !isset(ARR_SPEC[$fn]) || !plainArgs($c) || $c->args === []) {
                 return false;
             }
+            // 回调参数（array_map 第 1 个、array_filter 第 2 个）是 [$this, 'x'] / 'self::x' / 变量时，
+            // 改成从 phpup_arrfn() 里调用会丢掉类作用域，private / protected 方法就调不到了 → 不改
+            $cbAt = $fn === 'array_map' ? 0 : ($fn === 'array_filter' ? 1 : null);
+            if ($cbAt !== null && isset($c->args[$cbAt])) {
+                $cb = $c->args[$cbAt]->value;
+                $safeCb = $cb instanceof Expr\Closure || $cb instanceof Expr\ArrowFunction
+                    || ($cb instanceof Expr\ConstFetch && strtolower($cb->name->toString()) === 'null')
+                    || ($cb instanceof Node\Scalar\String_ && !str_contains($cb->value, '::'));
+                if (!$safeCb) {
+                    return false;
+                }
+            }
             $spec = ARR_SPEC[$fn];
             $pos = $c->getStartFilePos();
             if ($spec === 'implode') {
